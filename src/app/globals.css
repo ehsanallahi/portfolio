@@ -1,26 +1,233 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+  --font-heading: var(--font-geist-sans);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-brand: var(--brand);
+  --color-brand-2: var(--brand-2);
+  --color-surface: var(--surface);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-gradient: gradient-pan 8s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes gradient-pan {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Light theme */
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.985 0.003 270);
+  --foreground: oklch(0.2 0.02 270);
+  --surface: oklch(0.965 0.006 270);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 270);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.02 270);
+  --primary: oklch(0.5 0.21 277);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.95 0.008 270);
+  --secondary-foreground: oklch(0.25 0.02 270);
+  --muted: oklch(0.95 0.008 270);
+  --muted-foreground: oklch(0.46 0.02 270);
+  --accent: oklch(0.94 0.02 277);
+  --accent-foreground: oklch(0.3 0.08 277);
+  --destructive: oklch(0.55 0.22 27);
+  --success: oklch(0.52 0.14 155);
+  --border: oklch(0.2 0.02 270 / 10%);
+  --input: oklch(0.2 0.02 270 / 14%);
+  --ring: oklch(0.5 0.21 277);
+  /* Gradient accent pair: indigo → cyan (darker for contrast on light) */
+  --brand: oklch(0.5 0.21 277);
+  --brand-2: oklch(0.52 0.12 220);
+  --glow: oklch(0.6 0.2 277 / 12%);
+  --grid-line: oklch(0.2 0.02 270 / 6%);
+}
+
+/* Dark theme (default) */
+.dark {
+  --background: oklch(0.155 0.008 270);
+  --foreground: oklch(0.96 0.005 270);
+  --surface: oklch(0.185 0.01 270);
+  --card: oklch(0.195 0.011 270);
+  --card-foreground: oklch(0.96 0.005 270);
+  --popover: oklch(0.2 0.012 270);
+  --popover-foreground: oklch(0.96 0.005 270);
+  --primary: oklch(0.56 0.2 277);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.24 0.012 270);
+  --secondary-foreground: oklch(0.96 0.005 270);
+  --muted: oklch(0.24 0.012 270);
+  --muted-foreground: oklch(0.72 0.015 270);
+  --accent: oklch(0.27 0.04 277);
+  --accent-foreground: oklch(0.9 0.05 277);
+  --destructive: oklch(0.7 0.19 22);
+  --success: oklch(0.75 0.15 155);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.72 0.15 277);
+  --brand: oklch(0.74 0.15 277);
+  --brand-2: oklch(0.82 0.12 205);
+  --glow: oklch(0.6 0.2 277 / 16%);
+  --grid-line: oklch(1 0 0 / 4.5%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-background text-foreground;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+  }
+  ::selection {
+    background: color-mix(in oklch, var(--brand) 30%, transparent);
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-ring;
+  }
+  [id] {
+    scroll-margin-top: 5.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    background-image: linear-gradient(
+      100deg,
+      var(--brand),
+      var(--brand-2) 50%,
+      var(--brand)
+    );
+    background-size: 200% auto;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* Gradient hairline border that fades in on hover (uses mask, no layout cost) */
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      var(--brand),
+      transparent 40%,
+      transparent 60%,
+      var(--brand-2)
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .gradient-border:hover::before,
+  .gradient-border:focus-within::before {
+    opacity: 1;
+  }
+}
+
+/* Theme switch: the toggle animates a circular reveal via the View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
