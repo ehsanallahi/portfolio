@@ -10,7 +10,11 @@ export function ProjectGallery({ screens }: { screens: ProjectScreen[] }) {
     <Stagger
       className={cn(
         "grid gap-8",
-        mobileOnly ? "grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3" : "md:grid-cols-2",
+        mobileOnly
+          ? screens.length === 4
+            ? "grid-cols-1 min-[480px]:grid-cols-2 lg:grid-cols-4"
+            : "grid-cols-1 min-[480px]:grid-cols-2 md:grid-cols-3"
+          : "md:grid-cols-2",
       )}
     >
       {screens.map((screen) => (

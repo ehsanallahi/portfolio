@@ -134,21 +134,30 @@ export const projects: Project[] = [
     solution:
       "A single Flutter app with role-specific experiences: super dealers and distributors browse and buy from the catalogue, distributor orders are routed to super dealers, mechanics scan original parts and redeem reward points, and an in-app feed keeps the community connected.",
     features: [
-      "Four account types — Super Dealer, Distributor, Retailer and Mechanic",
+      "Role-based experiences for super dealers, distributors, retailers, mechanics and marketers",
       "Catalogue browsing and purchasing for dealers and distributors",
       "Distributor orders routed directly to super dealers",
-      "Original-part scanning to verify authenticity",
-      "Reward points that mechanics earn and redeem",
+      "QR scanning of original parts to verify authenticity",
+      "Reward points that mechanics earn, convert and redeem for rewards",
+      "Marketer dashboard with referral tracking, analytics, payout requests and a leaderboard",
       "Community feed for updates and promotions",
+      "English / Urdu interface, with Urdu product names",
+      "Order history with downloadable PDF summaries",
+      "Push notifications for orders and updates",
     ],
     architecture: [
       {
         layer: "Mobile app",
-        detail: "Cross-platform Flutter app distributed through Google Play.",
+        detail: "Cross-platform Flutter app with Provider state management, distributed through Google Play.",
+      },
+      {
+        layer: "Backend",
+        detail:
+          "Firebase — Authentication, Cloud Firestore, Storage, Cloud Functions and Cloud Messaging for push notifications.",
       },
       {
         layer: "Roles",
-        detail: "Tailored flows for super dealers, distributors, retailers and mechanics.",
+        detail: "Tailored home screens and flows for super dealers, distributors, retailers, mechanics and marketers.",
       },
       {
         layer: "Ordering",
@@ -180,8 +189,36 @@ export const projects: Project[] = [
           "Added original-part scanning for mechanics, tied to a points system that rewards using genuine parts.",
       },
     ],
-    stack: ["Flutter", "Dart", "Android", "Google Play"],
+    stack: ["Flutter", "Dart", "Firebase", "Cloud Functions", "Provider", "Hive", "Google Play"],
     links: { playStore: "https://play.google.com/store/apps/details?id=com.proj_ish.app" },
+    image: "/images/projects/ish/ish-cover-v2.webp",
+    imageBackground: "#1a0305",
+    gallery: [
+      {
+        src: "/images/projects/ish/mechanic-flip-win.webp",
+        alt: "ISH Motorcycle Parts mechanic home with Scan Original Parts, points balance, Convert Points and Rewards, promotions and product tiles",
+        caption: "Mechanic home — points, rewards and part scanning",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/ish/qr-result.webp",
+        alt: "ISH Motorcycle Parts QR result confirming an authentic product, points added to the account, product information and QR code details",
+        caption: "Scan result — authentic part verified, points added",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/ish/marketer.webp",
+        alt: "ISH Motorcycle Parts marketer dashboard with quick actions for referred users, analytics, withdrawals, leaderboard and profile",
+        caption: "Marketer dashboard — referrals and payouts",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/ish/analytics.webp",
+        alt: "ISH Motorcycle Parts marketer analytics with total points generated, active conversion, total withdrawals and top scanners",
+        caption: "Marketer analytics — points, payouts and top scanners",
+        frame: "mobile",
+      },
+    ],
     hue: 45,
     kind: "mobile",
   },
