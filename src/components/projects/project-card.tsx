@@ -18,6 +18,7 @@ export function ProjectCard({ project, wide = false }: { project: Project; wide?
         project={project}
         className={cn("border-b border-border", wide && "lg:aspect-auto lg:h-full lg:border-r lg:border-b-0")}
         sizes={wide ? "(min-width: 1024px) 600px, 100vw" : "(min-width: 768px) 50vw, 100vw"}
+        fit={wide ? "contain" : "cover"}
       />
 
       <div className="flex flex-1 flex-col p-6 sm:p-8">

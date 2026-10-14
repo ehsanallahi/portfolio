@@ -55,7 +55,7 @@ export const navItems: NavItem[] = [
 
 /** Facts taken directly from the resume — no invented metrics. */
 export const highlights: Highlight[] = [
-  { value: "1+ yr", label: "Professional experience" },
+  { value: "5", label: "Products built across web & mobile" },
   { value: "10", label: "Roles in Imtihan's RBAC system" },
   { value: "2", label: "Payment gateways integrated" },
   { value: "1st", label: "Place, Xavor AI Bootcamp" },

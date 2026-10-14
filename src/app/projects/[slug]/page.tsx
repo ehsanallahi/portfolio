@@ -6,6 +6,7 @@ import { categoryLabels, getProject, projects } from "@/data/projects";
 import { profile } from "@/data/portfolio";
 import { ProjectVisual } from "@/components/projects/project-visual";
 import { ProjectLinks } from "@/components/projects/project-links";
+import { ProjectGallery } from "@/components/projects/project-gallery";
 import { Reveal, Stagger, StaggerItem } from "@/components/animations/reveal";
 import { JsonLd } from "@/components/shared/json-ld";
 import { ctaVariants } from "@/components/shared/cta";
@@ -123,6 +124,17 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             </dd>
           </div>
         </dl>
+
+        {project.gallery && project.gallery.length > 0 && (
+          <section aria-labelledby="screens-title" className="mt-20">
+            <Reveal>
+              <h2 id="screens-title" className="mb-10 text-2xl font-semibold tracking-tight sm:text-3xl">
+                Screens
+              </h2>
+            </Reveal>
+            <ProjectGallery screens={project.gallery} />
+          </section>
+        )}
 
         <div className="mt-20 grid gap-6 md:grid-cols-2">
           <Reveal className="rounded-3xl border border-border bg-card/60 p-6 sm:p-8">

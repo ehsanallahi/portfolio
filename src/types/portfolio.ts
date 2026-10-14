@@ -70,6 +70,14 @@ export interface ProjectLink {
   playStore?: string;
 }
 
+export interface ProjectScreen {
+  src: string;
+  alt: string;
+  caption: string;
+  /** "mobile" renders in a phone frame, "web" in a browser frame */
+  frame: "mobile" | "web";
+}
+
 export interface Project {
   slug: string;
   title: string;
@@ -87,10 +95,14 @@ export interface Project {
   links: ProjectLink;
   /** Optional screenshot in /public; a branded visual is rendered when absent */
   image?: string;
+  /** Colour behind `image` where it's letterboxed (matches the image's edges) */
+  imageBackground?: string;
   /** Hue (0–360) for the branded placeholder visual */
   hue: number;
   /** Placeholder style: browser window (default) or phone */
   kind?: "web" | "mobile";
+  /** Extra screens shown on the case-study page */
+  gallery?: ProjectScreen[];
 }
 
 export interface Service {

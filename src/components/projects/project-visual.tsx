@@ -11,24 +11,33 @@ export function ProjectVisual({
   className,
   priority = false,
   sizes = "(min-width: 1024px) 50vw, 100vw",
+  fit = "cover",
 }: {
   project: Project;
   className?: string;
   priority?: boolean;
   sizes?: string;
+  /** "contain" shows the whole image when the box isn't 16:10 */
+  fit?: "cover" | "contain";
 }) {
   const h = project.hue;
 
   if (project.image) {
     return (
-      <div className={cn("relative aspect-[16/10] overflow-hidden", className)}>
+      <div
+        className={cn("relative aspect-[16/10] overflow-hidden", className)}
+        style={{ background: project.imageBackground ?? "var(--surface)" }}
+      >
         <Image
           src={project.image}
           alt={`Screenshot of ${project.title}`}
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className={cn(
+            "transition-transform duration-700 ease-out group-hover:scale-[1.04]",
+            fit === "contain" ? "object-contain" : "object-cover",
+          )}
         />
       </div>
     );
