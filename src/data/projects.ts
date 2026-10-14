@@ -227,108 +227,176 @@ export const projects: Project[] = [
     title: "Chicago Street Pizza",
     tagline: "Food ordering app with kitchen, delivery and admin dashboards",
     summary:
-      "A Flutter ordering app for Chicago Street Pizza, built on Firebase, with dedicated dashboards for customers, kitchen staff, delivery riders and admins.",
+      "A Flutter ordering app for Chicago Street Pizza, built on Firebase, where customers, kitchen staff, delivery riders and admins each get their own live dashboard.",
     categories: ["mobile"],
-    role: "Designed and built the app end to end — Flutter UI, state management and Firebase integration.",
+    role: "Designed and built the app end to end — Flutter UI, Riverpod state, routing and Firebase integration.",
     problem:
-      "A pizza restaurant's ordering flow involves customers, the kitchen, delivery riders and management — and each needs a different view of the same orders.",
+      "A pizza restaurant's ordering flow involves customers, the kitchen, delivery riders and management — and each needs a different, up-to-date view of the same orders.",
     solution:
-      "One Flutter app with role-based dashboards on Firebase: customers browse the menu, build a cart and track their orders, the kitchen and delivery teams work from their own dashboards, and admins manage the menu, products and staff.",
+      "One Flutter app with role-based dashboards over live Firestore streams: customers order from the menu and track progress, the kitchen and riders move orders through each stage, and admins manage the menu and staff.",
     features: [
-      "Menu browsing, cart and checkout for customers",
-      "Order tracking for customers",
-      "Kitchen dashboard for incoming orders",
-      "Delivery dashboard for riders",
-      "Admin tools to manage the menu, products and staff",
-      "Email sign-up and login with Firebase Authentication",
+      "Menu with add-to-cart, cart total and one-tap checkout",
+      "Live order tracking through pending, preparing, ready, out for delivery and delivered",
+      "Kitchen dashboard to start preparing orders and mark them ready",
+      "Delivery dashboard to pick up orders and mark them delivered",
+      "Admin portal to add, edit and remove menu items and manage staff",
+      "Email sign-up and login with Firebase Authentication, routed by role",
     ],
     architecture: [
       {
         layer: "App",
-        detail: "Flutter app organised by feature — customer, kitchen, delivery and admin — with go_router navigation.",
+        detail: "Flutter app organised by feature — customer, kitchen, delivery and admin — with go_router navigation and a home screen that opens each user's dashboard by role.",
       },
       {
         layer: "State",
-        detail: "Riverpod controllers with repositories for products and orders.",
+        detail: "Riverpod providers, with StreamProviders over Firestore so every dashboard updates live.",
       },
       {
         layer: "Auth",
-        detail: "Firebase Authentication for registration and login.",
+        detail: "Firebase Authentication for registration and login, with each user's role stored in Firestore.",
       },
       {
         layer: "Data",
-        detail: "Cloud Firestore storing products, orders and users.",
+        detail: "Cloud Firestore storing products (with branch availability), orders and users.",
       },
     ],
     challenges: [
       {
         challenge: "Four roles in one codebase",
         solution:
-          "Organised the app into feature modules per role, with routing that sends each user to their own dashboard.",
+          "Organised the app into feature modules per role, with routing that sends each user to their own dashboard after login.",
       },
       {
         challenge: "Everyone working from the same orders",
         solution:
-          "Used a shared order repository over Cloud Firestore, so customer, kitchen and delivery views all read the same order data.",
+          "Streamed orders from Cloud Firestore through Riverpod, so a status change in the kitchen shows up instantly for riders and customers.",
+      },
+      {
+        challenge: "A clear order lifecycle",
+        solution:
+          "Modelled five order stages, each with its own action button and colour-coded progress bar, so every role knows the next step.",
       },
     ],
     stack: ["Flutter", "Dart", "Riverpod", "go_router", "Firebase Auth", "Cloud Firestore"],
     links: { repo: "https://github.com/ehsanallahi/chicago_street" },
-    hue: 20,
+    image: "/images/projects/chicago-street/chicago-cover.webp",
+    imageBackground: "#0b1614",
     kind: "mobile",
+    gallery: [
+      {
+        src: "/images/projects/chicago-street/menu.webp",
+        alt: "Chicago Street Pizza menu grid with pizzas, prices in rupees, add-to-cart buttons and a View Cart button",
+        caption: "Menu — browse, add to cart, check out",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/chicago-street/orders.webp",
+        alt: "My Orders screen with colour-coded progress bars for out for delivery, preparing and delivered orders",
+        caption: "My Orders — live order tracking",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/chicago-street/kitchen.webp",
+        alt: "Kitchen Dashboard with pending and preparing orders and Start Preparing and Ready for Delivery buttons",
+        caption: "Kitchen — move orders through preparation",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/chicago-street/admin.webp",
+        alt: "Admin Portal with Manage Menu, Manage Staff, Manage Branches and Sales & Stats tiles",
+        caption: "Admin portal — menu and staff management",
+        frame: "mobile",
+      },
+    ],
+    hue: 20,
   },
   {
     slug: "slack-reminders",
     title: "Slack Reminders App",
-    tagline: "Serverless reminder scheduling for Slack",
+    tagline: "Rich-text, recurring Slack reminders — built at TxLabz",
     summary:
-      "A serverless full-stack app with a React admin dashboard for scheduling automated Slack reminders.",
+      "A full-stack Next.js app I built during my internship at TxLabz: write formatted messages, schedule them once, daily or weekly, and track every delivery to Slack.",
     categories: ["full-stack"],
-    role: "Full-stack developer — dashboard, data models, REST endpoints and Slack formatting.",
+    role: "Full-stack developer — dashboard UI, rich-text editor, Slack Markdown conversion, scheduling and REST endpoints.",
     problem:
-      "Recurring team reminders are tedious to send by hand, and rich-text messages don't map cleanly onto Slack's own Markdown format.",
+      "Teams send the same reminders over and over — standups, weekly reports, timesheets. Doing it by hand is easy to forget, and rich text written in a web form doesn't match Slack's own Markdown format.",
     solution:
-      "A React admin dashboard where reminders are created and scheduled, backed by a serverless Node.js API and MongoDB, with a converter that turns rich text into Slack Markdown before messages are sent.",
+      "An admin dashboard with a TipTap rich-text editor whose output is converted to Slack Markdown with Turndown, recurring schedules in Pakistan time, and a cron-driven scheduler that posts through the Slack Web API and logs every delivery.",
     features: [
-      "React admin dashboard to create and manage reminders",
-      "Automated, scheduled delivery of Slack reminders",
-      "Rich-text to Slack Markdown conversion",
-      "MongoDB data models and REST endpoints",
-      "Serverless Node.js backend",
+      "Rich-text editor (bold, italic, strikethrough, links, code, lists) converted to Slack Markdown",
+      "Once, daily or weekly schedules in Pakistan time (GMT+5)",
+      "Searchable Slack channel picker loaded from the workspace",
+      "Edit, pause, resume, run now or delete any reminder",
+      "Home dashboard with totals, active, delivered, paused, failed and upcoming reminders",
+      "Per-reminder delivery history with error details",
+      "Admin login with NextAuth and a protected dashboard",
     ],
     architecture: [
       {
         layer: "Dashboard",
-        detail: "React admin interface for composing and scheduling reminders.",
+        detail: "Next.js App Router with shadcn/ui, TipTap and react-hook-form, protected by NextAuth.",
       },
       {
-        layer: "API",
-        detail: "Serverless Node.js REST endpoints for reminder management.",
+        layer: "Formatting",
+        detail:
+          "Turndown with custom rules turns the editor's HTML into Slack mrkdwn — *bold*, _italic_, ~strike~, <url|links> and code.",
       },
       {
-        layer: "Data",
-        detail: "MongoDB data models for reminders and their schedules.",
+        layer: "API & data",
+        detail: "Next.js API routes over MongoDB (Mongoose) storing reminders, schedules and a delivery log.",
       },
       {
         layer: "Delivery",
-        detail:
-          "Scheduled jobs format rich text as Slack Markdown and post reminders to Slack.",
+        detail: "A cron-triggered route finds due reminders and posts them with the Slack Web API.",
       },
     ],
     challenges: [
       {
-        challenge: "Rich text doesn't match Slack's formatting",
+        challenge: "Rich text doesn't match Slack's format",
         solution:
-          "Implemented a rich-text to Slack Markdown conversion so messages look right when delivered.",
+          "Configured Turndown with Slack-specific rules for bold, strikethrough, links and inline code, so messages look right when they arrive.",
       },
       {
-        challenge: "No always-on server",
+        challenge: "Recurring schedules in local time",
         solution:
-          "Designed the backend around serverless functions with MongoDB for persistence.",
+          "Modelled once, daily and weekly frequencies and anchored them to Pakistan time, showing each schedule in plain language in the list.",
+      },
+      {
+        challenge: "Knowing whether a message actually went out",
+        solution:
+          "Recorded every delivery attempt with its time, status and error, surfaced in the dashboard stats and a delivery-history dialog.",
       },
     ],
-    stack: ["React", "Node.js", "MongoDB", "Serverless", "Slack API"],
-    links: {},
+    stack: ["Next.js", "React", "MongoDB", "Mongoose", "NextAuth", "TipTap", "Slack Web API", "shadcn/ui"],
+    links: { repo: "https://github.com/ehsanallahi/slack_app" },
+    image: "/images/projects/slack-reminders/slack-app-cover.webp",
+    imageBackground: "#04131f",
+    gallery: [
+      {
+        src: "/images/projects/slack-reminders/scheduled-reminders.webp",
+        alt: "Scheduled Reminders table with channels, once, daily and weekly schedules, Active and Paused badges, last delivery and icon actions",
+        caption: "Scheduled reminders — recurring schedules and quick actions",
+        frame: "web",
+      },
+      {
+        src: "/images/projects/slack-reminders/create-reminder.webp",
+        alt: "Create a New Reminder form with a rich-text editor toolbar, channel picker, weekly frequency, day and time",
+        caption: "Create reminder — rich-text editor and recurring schedules",
+        frame: "web",
+      },
+      {
+        src: "/images/projects/slack-reminders/dashboard-home.webp",
+        alt: "Dashboard home with cards for total, active, delivered, paused, failed and upcoming reminders",
+        caption: "Home — reminder stats at a glance",
+        frame: "web",
+      },
+      {
+        src: "/images/projects/slack-reminders/delivery-history.webp",
+        alt: "Delivery History dialog listing weekly deliveries with one failed attempt",
+        caption: "Delivery history — every attempt logged",
+        frame: "web",
+      },
+    ],
     hue: 205,
   },
   {
@@ -344,15 +412,17 @@ export const projects: Project[] = [
     solution:
       "A React frontend on top of a Strapi (Node.js) backend and PostgreSQL, with JWT authentication, role-based access for each user type and dedicated recruiter dashboards for filtering applicants.",
     features: [
-      "JWT authentication",
-      "Role-based access for job seekers and recruiters",
-      "Recruiter dashboards for faster applicant filtering",
-      "REST APIs powering listings and applications",
+      "Job search by keyword with filters for job type, experience and salary range",
+      "One-click applications, with expired listings blocked automatically",
+      "CV uploads to Cloudinary, managed from the user dashboard",
+      "Employer job posting and recruiter dashboards for faster applicant filtering",
+      "Editor approval before jobs are published, plus a super-admin role",
+      "JWT authentication with protected routes",
     ],
     architecture: [
       {
         layer: "Frontend",
-        detail: "React interface with separate flows for job seekers and recruiters.",
+        detail: "Next.js and React with Tailwind CSS and shadcn/ui, mixing server- and client-side rendering.",
       },
       {
         layer: "Backend",
@@ -361,6 +431,10 @@ export const projects: Project[] = [
       {
         layer: "Data",
         detail: "PostgreSQL storing jobs, profiles and applications.",
+      },
+      {
+        layer: "Files",
+        detail: "Cloudinary storing uploaded CVs.",
       },
     ],
     challenges: [
@@ -375,11 +449,32 @@ export const projects: Project[] = [
           "Built recruiter dashboards and REST endpoints focused on making applicant filtering faster and simpler.",
       },
     ],
-    stack: ["React", "Node.js", "Strapi", "PostgreSQL", "JWT"],
+    stack: ["Next.js", "React", "Node.js", "Strapi", "PostgreSQL", "Cloudinary", "JWT"],
     links: {
-      live: "https://jobportal-seven-roan.vercel.app",
-      repo: "https://github.com/ehsanallahi/jobportal",
+      repo: "https://github.com/ehsanallahi/jobportal-frontend-",
     },
+    image: "/images/projects/job-portal/job-portal-cover.webp",
+    imageBackground: "#04201d",
+    gallery: [
+      {
+        src: "/images/projects/job-portal/listings.webp",
+        alt: "Job Portal listings page with keyword search, salary range slider, job type and experience filters, and job cards with Apply Now",
+        caption: "Job listings — search, filter by type, experience and salary, then apply",
+        frame: "web",
+      },
+      {
+        src: "/images/projects/job-portal/dashboard.webp",
+        alt: "Job Portal user dashboard with profile, skills, social links, uploaded CVs and recent jobs",
+        caption: "Dashboard — profile, CV uploads and recent jobs",
+        frame: "web",
+      },
+      {
+        src: "/images/projects/job-portal/landing.webp",
+        alt: "Job Portal landing page with the headline Find Your Dream Job and get Hired, Find Jobs and Post a Job buttons",
+        caption: "Landing page",
+        frame: "web",
+      },
+    ],
     hue: 165,
   },
 ];
