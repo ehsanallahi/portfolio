@@ -13,21 +13,27 @@ export const projects: Project[] = [
     problem:
       "Exam preparation needs a steady supply of quality practice questions and quick answers to doubts. A platform serving students, teachers, guardians and internal staff also needs tight, role-aware access control and payment options that work for local users.",
     solution:
-      "A modular backend that serves both a Next.js web app and a Flutter mobile app, a policy-driven permission system for ten distinct roles, a freemium subscription model powered by JazzCash and EasyPaisa, and Google Gemini integrations that turn PDFs into exam-ready MCQs and answer doubts bilingually with streaming responses.",
+      "A Next.js web platform on a modular Node.js backend, an offline-first Flutter mobile app for Matric students, a policy-driven permission system for ten distinct roles, a freemium subscription model powered by JazzCash and EasyPaisa, and Google Gemini integrations that turn PDFs into exam-ready MCQs and answer doubts bilingually with streaming responses.",
     features: [
       "Exam-ready MCQs generated from PDFs with Google Gemini",
       "Bilingual AI doubt-solving with streaming responses",
       "10-role RBAC with Casbin — students, teachers, guardians, editors, moderators, finance, admins and super admins",
       "Freemium subscriptions via JazzCash and EasyPaisa",
-      "Flutter mobile app with MCQ practice, exams, past papers and AI tutor chat",
-      "One modular backend serving the web and mobile apps",
+      "Flutter mobile app with a daily study plan, practice quizzes, flashcards, a diagnostic test and an AI tutor",
+      "Scan a stuck question with the camera (ML Kit text recognition) and get AI help",
+      "English / Urdu interface with Nastaliq typography",
+      "Offline-first mobile data with background sync",
       "PostgreSQL schemas tuned with indexing for fast reads",
     ],
     architecture: [
       {
         layer: "Clients",
+        detail: "Next.js web app, plus a Flutter mobile app built with Riverpod and go_router.",
+      },
+      {
+        layer: "Mobile data",
         detail:
-          "Next.js web app and a Flutter mobile app (Provider for state, secure token storage) consuming the same backend.",
+          "Offline-first: a local Drift (SQLite) database feeds the UI, while a sync engine pushes changes to Firebase (Auth, Firestore, Cloud Functions, Storage).",
       },
       {
         layer: "Backend",
@@ -62,6 +68,11 @@ export const projects: Project[] = [
           "Structured the backend as independent modules with clean boundaries, so both clients share the same APIs.",
       },
       {
+        challenge: "Studying on patchy mobile connections",
+        solution:
+          "Made the mobile app offline-first — the UI reads from a local database and an outbox syncs progress to Firebase when the connection returns.",
+      },
+      {
         challenge: "Fast reads on a growing question bank",
         solution:
           "Designed PostgreSQL schemas with Prisma and added indexing and query tuning for the hottest read paths.",
@@ -82,8 +93,32 @@ export const projects: Project[] = [
       "Google Gemini",
       "JazzCash",
       "EasyPaisa",
+      "Firebase",
+      "Riverpod",
     ],
     links: { live: "https://www.imtihan.app" },
+    image: "/images/projects/imtihan/cover.webp",
+    imageBackground: "#08251f",
+    gallery: [
+      {
+        src: "/images/projects/imtihan/today.webp",
+        alt: "Imtihan mobile app Today screen with study streak, days left, today's plan and quick access to AI Tutor, Flashcards and Diagnostic",
+        caption: "Today — a daily plan built from topic mastery",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/imtihan/practice.webp",
+        alt: "Imtihan mobile app practice quiz on the Cell Cycle with the correct answer, Metaphase, highlighted and an explanation",
+        caption: "Practice — MCQs with instant explanations",
+        frame: "mobile",
+      },
+      {
+        src: "/images/projects/imtihan/tutor.webp",
+        alt: "Imtihan mobile app AI Tutor screen with syllabus-grounded suggested questions and a scan button",
+        caption: "AI Tutor — grounded in the syllabus",
+        frame: "mobile",
+      },
+    ],
     hue: 277,
   },
   {
